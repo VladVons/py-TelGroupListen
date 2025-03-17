@@ -1,6 +1,6 @@
 *.pyc
 *.log
 
-data/sessions
+src/data/sessions/
 __pycache__
 .idea
