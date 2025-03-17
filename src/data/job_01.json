@@ -3,6 +3,9 @@
     "enabled": true,
     "session": "myName",
     "group": "@udalenka_chatik",
-    "trigger": "test.txt"
+    "plugin": {
+      "name": "Respond",
+      "trigger": "data/triggers/test.txt"
+    }
   }
 ]

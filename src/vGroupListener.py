@@ -12,53 +12,21 @@ from telethon import TelegramClient, events
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 #
-from IncP.Common import LoadJson, Logger, GetAppVer
+from IncP.Common import InitLog, LoadFileJson, LoadFileTxt, GetAppVer, DynImport
 
 class TGroupListen():
     def __init__(self):
         self.reTriggerWords = None
-
-    @staticmethod
-    def LoadTriggerWords(aFile: str) -> set:
-        with open(aFile, 'r', encoding='utf-8') as F:
-            return set(
-                xLine.strip()
-                for xLine in F.readlines()
-                if xLine.strip() and (not xLine.startswith('#'))
-            )
-
-    def HighlightTriggerWords(self, aText) -> tuple:
-        def _Highlight(aMatch):
-            return f'\033[91m{aMatch.group()}\033[0m'
-
-        Text = self.reTriggerWords.sub(_Highlight, aText)
-        return (Text, Text.count('[0m'))
-
-    async def OnEvent(self, aEvent):
-        Highlighted, WordsCount = self.HighlightTriggerWords(aEvent.message.text)
-        if (WordsCount):
-            #await asyncio.sleep(20)
-            #await aEvent.respond('text of delayed response')
-            pass
-
-        Sender = await aEvent.get_sender()
-
-        Filtered = filter(None, (Sender.first_name, Sender.last_name))
-        FirstName = ' '.join(Filtered)
-
-        UserName = f'(@{Sender.username})' if hasattr(Sender, 'username') and Sender.username else ''
-        Time = aEvent.message.date.strftime('%Y-%m-%d %H:%M:%S')
-        logging.info('[%s] %s %s: %s', Time, FirstName, UserName, Highlighted)
+        self.Plugin = None
 
     async def Exec(self, aConf: dict):
-        File = f'data/triggers/{aConf["trigger"]}'
-        Words = set(self.LoadTriggerWords(File))
-        Pattern = r'\b(' + '|'.join(map(re.escape, Words)) + r')\b'
-        self.reTriggerWords = re.compile(Pattern, flags=re.IGNORECASE)
+        PluginName = aConf['plugin']['name']
+        Class, Err = DynImport(f'IncP.Plugin.{PluginName}', 'TPlugin' + PluginName)
+        assert(Class), f'Plugin loading error {Err}'
+        self.Plugin = Class(aConf['plugin'])
 
         Session = f'data/sessions/{aConf["session"]}'
-        File = f'{Session}.json'
-        Params = LoadJson(File)
+        Params = LoadFileJson(f'{Session}.json')
         Group = aConf.get('group') if aConf.get('group') else aConf.get('invite_link')
         await self._Connect(f'{Session}.session', Group, Params)
 
@@ -67,10 +35,10 @@ class TGroupListen():
             await Client.start()
 
             Me = await Client.get_me()
-            Logger.info('session: %s, name: %s %s, phone: %s', aName, Me.first_name, Me.last_name, Me.phone)
+            logging.info('session: %s, name: %s %s, phone: %s', aName, Me.first_name, Me.last_name, Me.phone)
 
             Process = psutil.Process(os.getpid())
-            Logger.info('Memory used: %.2f Mb', Process.memory_info().rss / (1024 * 1024))
+            logging.info('Memory used: %.2f Mb', Process.memory_info().rss / (1024 * 1024))
 
             try:
                 if ('/joinchat/' in aGroupUser):
@@ -86,15 +54,19 @@ class TGroupListen():
             logging.info('Listening for messages ...')
             @Client.on(events.NewMessage())
             async def HandleNewMessage(event):
-                await self.OnEvent(event)
+                await self.Plugin.OnEvent(event)
 
             await Client.run_until_disconnected()
 
 async def Main(aFile: str):
-    AppVer = list(GetAppVer().values())
-    logging.info(', '.join(AppVer))
+    AppVer = GetAppVer()
+    AppName = AppVer["app_name"].rsplit('.', maxsplit=1)[0]
+    InitLog(f'{AppName}.log')
 
-    Conf = LoadJson(f'data/{aFile}')
+    Values = list(AppVer.values())
+    logging.info(', '.join(Values))
+
+    Conf = LoadFileJson(f'data/{aFile}')
     Tasks = []
     for xConf in Conf:
         if (xConf.get('enabled', True)):
