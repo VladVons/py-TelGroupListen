@@ -3,18 +3,14 @@
 # License: GNU, see LICENSE for more details
 
 
-import os
-import sys
 import logging
 import json
-
-def GetAppName() -> str:
-    ModMain = sys.modules['__main__']
-    MainFile = ModMain.__file__
-    return os.path.basename(MainFile)
+#
+from . import GetAppVer
 
 def InitLog():
-    AppName = GetAppName()
+    AppName = GetAppVer()
+
     logging.basicConfig(
         level=logging.INFO,
         datefmt='%Y-%m-%d %H:%M:%S',

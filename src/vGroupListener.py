@@ -12,7 +12,7 @@ from telethon import TelegramClient, events
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 #
-from IncP.Common import LoadJson, Logger
+from IncP.Common import LoadJson, Logger, GetAppVer
 
 class TGroupListen():
     def __init__(self):
@@ -91,6 +91,9 @@ class TGroupListen():
             await Client.run_until_disconnected()
 
 async def Main(aFile: str):
+    AppVer = list(GetAppVer().values())
+    logging.info(', '.join(AppVer))
+
     Conf = LoadJson(f'data/{aFile}')
     Tasks = []
     for xConf in Conf:
