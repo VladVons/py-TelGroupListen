@@ -1,0 +1,8 @@
+[
+  {
+    "enabled": true,
+    "session": "myName",
+    "group": "@udalenka_chatik",
+    "trigger": "test.txt"
+  }
+]

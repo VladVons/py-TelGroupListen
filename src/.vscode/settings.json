@@ -1,0 +1,51 @@
+{
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "tabnine.experimentalAutoImports": true,
+    "python.defaultInterpreterPath": "/home/vladvons/virt/python3/bin/python3.12",
+    "pylint.args": [
+        "--disable=invalid-name",
+        "--disable=missing-function-docstring",
+        "--disable=missing-module-docstring",
+        "--disable=missing-class-docstring",
+        "--disable=too-few-public-methods",
+        "--disable=too-many-arguments",
+        "--disable=too-many-locals",
+        "--disable=too-many-instance-attributes",
+        "--disable=too-many-public-methods",
+        "--disable=too-many-branches",
+        "--disable=too-many-nested-blocks",
+        "--disable=line-too-long",
+        "--disable=superfluous-parens",
+        "--disable=consider-using-f-string",
+        "--disable=broad-except",
+        "--disable=inconsistent-return-statements"
+    ],
+    "window.zoomLevel": 2,
+    "workbench.tree.indent": 16,
+    "workbench.editor.titleScrollbarSizing": "large",
+    "workbench.colorCustomizations": {
+        "editor.lineHighlightBackground": "#E0FFE020",
+        "tab.activeBorder": "#33FF33"
+    },
+    "files.associations": {
+        "*.j2": "html"
+    },
+    "[j2]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
+    },
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "10.10.1.1",
+            "port": 5433,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "crawler_used",
+            "database": "crawler_used",
+            "username": "crawler_used_user1"
+        }
+    ]
+}

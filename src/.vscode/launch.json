@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "purpose":["debug-in-terminal"],
+            "justMyCode": true,
+            "args": ["--conf=Dev"],
+            "_args": ["--conf=DevClient"],
+            "_args": ["--conf=Service"],
+            "_args": ["--conf=View"]
+         }
+    ]
+}
