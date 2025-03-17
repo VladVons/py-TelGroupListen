@@ -1,0 +1,6 @@
+*.pyc
+*.log
+
+data/sessions
+__pycache__
+.idea
