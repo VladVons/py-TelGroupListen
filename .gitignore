@@ -3,5 +3,5 @@
 
 
 __pycache__
-src/data/sessions/
+src/data/sessions
 .idea
