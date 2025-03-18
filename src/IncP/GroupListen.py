@@ -33,7 +33,11 @@ class TGroupListen():
             Chat = Join.chats[-1]
             Class = TClass(Chat, aConf)
 
-            aClient.add_event_handler(Class.OnEvent, events.NewMessage(chats=ConfGroup))
+            ConfEvent = aConf.get('event', 'NewMessage')
+            EventType = getattr(events, ConfEvent, None)
+            assert(EventType), f'no event supported {ConfEvent}'
+            aClient.add_event_handler(Class.OnEvent, EventType(chats=ConfGroup))
+
             logging.info('joined group %s', ConfGroup)
             return True
         except Exception as E:

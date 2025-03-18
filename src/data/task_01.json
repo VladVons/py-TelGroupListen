@@ -6,6 +6,7 @@
       "plugins": [
         {
           "enabled": true,
+          "event": "NewMessage",
           "class": "Respond",
           "group": "udalenka_chatik",
           "trigger": "data/triggers/test.txt"
