@@ -13,6 +13,11 @@
           "class": "Respond",
           "group": "FindWares_UA2",
           "trigger": "data/triggers/test.txt"
+        },
+        {
+          "class": "Respond",
+          "group": "compbest_ua",
+          "trigger": "data/triggers/test.txt"
         }
       ]
     }

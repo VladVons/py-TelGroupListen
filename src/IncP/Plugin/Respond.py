@@ -29,10 +29,10 @@ class TPluginRespond(TPlugin):
             pass
             #Info = await self.GetSenderInfo(aEvent)
             #logging.info('%s: %s', self.Chat.username, Info)
-            logging.info(Highlighted)
+            #logging.info(Highlighted)
 
             #await asyncio.sleep(20)
             #await aEvent.respond('text of delayed response')
 
-        # print(self.Chat.username, gCount, self.Count)
-        # print(aEvent.message.text)
+        print(self.Chat.username, gCount, self.Count)
+        print(aEvent.message.text)
