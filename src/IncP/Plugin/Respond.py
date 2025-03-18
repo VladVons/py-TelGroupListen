@@ -34,5 +34,5 @@ class TPluginRespond(TPlugin):
             #await asyncio.sleep(20)
             #await aEvent.respond('text of delayed response')
 
-        print(self.Chat.username, gCount, self.Count)
-        print(aEvent.message.text)
+        logging.info('plugin class: %s, user: %s, total count: %d, count: %d', self.Conf['class'], self.Chat.username, gCount, self.Count)
+        logging.info(aEvent.message.text)

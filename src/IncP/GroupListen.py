@@ -58,8 +58,12 @@ class TGroupListen():
 
                     await self._AddPlugin(Client, xConf)
 
-            logging.info('listening for events ...')
-            await Client.run_until_disconnected()
+            BaseName = aName.rsplit('/', maxsplit=1)[-1]
+            if (Groups):
+                logging.info('listening session %s for events ...', BaseName)
+                await Client.run_until_disconnected()
+            else:
+                logging.warning('no plugins in session %s', BaseName)
 
     async def Run(self):
         Process = psutil.Process(os.getpid())
