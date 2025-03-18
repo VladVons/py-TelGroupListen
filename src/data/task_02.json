@@ -1,0 +1,20 @@
+{
+  "tasks": [
+    {
+      "enabled": true,
+      "session": "14158156130",
+      "plugins": [
+        {
+          "class": "Respond",
+          "group": "FindWares_UA",
+          "trigger": "data/triggers/test.txt"
+        },
+        {
+          "class": "Respond",
+          "group": "FindWares_UA2",
+          "trigger": "data/triggers/test.txt"
+        }
+      ]
+    }
+  ]
+}
