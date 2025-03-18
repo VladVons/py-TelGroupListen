@@ -6,8 +6,6 @@
       "session": "14158156130",
       "plugins": [
         {
-          "enabled": true,
-          "event": "NewMessage",
           "class": "Respond",
           "group": "udalenka_chatik",
           "trigger": "data/triggers/test.txt"
@@ -16,19 +14,23 @@
           "class": "Respond",
           "group": "workinchicago",
           "trigger": "data/triggers/test.txt"
-        },        {
+        },
+        {
           "class": "Respond",
           "group": "vacancies_infobiz",
           "trigger": "data/triggers/test.txt"
-        },        {
+        },
+        {
           "class": "Respond",
           "group": "gilbertwil",
           "trigger": "data/triggers/test.txt"
-        },        {
+        },
+        {
           "class": "Respond",
           "group": "ukraina_eskort",
           "trigger": "data/triggers/test.txt"
-        },        {
+        },
+        {
           "class": "Respond",
           "group": "savannamlbb",
           "trigger": "data/triggers/test.txt"
@@ -42,14 +44,15 @@
           "class": "Respond",
           "group": "mt103202transfer",
           "trigger": "data/triggers/test.txt"
-        },        {
+        },
+        {
           "class": "Respond",
           "group": "lowzemgwlls",
           "trigger": "data/triggers/test.txt"
         },
         {
           "class": "Respond",
-          "group": "nash_miami",
+          "group": "Nash_miami",
           "trigger": "data/triggers/test.txt"
         },
         {
@@ -125,11 +128,6 @@
         {
           "class": "Respond",
           "group": "concentratcertain9",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "ydalenkachat",
           "trigger": "data/triggers/test.txt"
         }
       ]

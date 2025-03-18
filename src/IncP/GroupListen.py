@@ -4,6 +4,7 @@
 
 
 import os
+import asyncio
 import logging
 import psutil
 #
@@ -60,8 +61,13 @@ class TGroupListen():
 
             BaseName = aName.rsplit('/', maxsplit=1)[-1]
             if (Groups):
-                logging.info('listening session %s for events ...', BaseName)
-                await Client.run_until_disconnected()
+                while True:
+                    logging.info('listening session %s for events ...', BaseName)
+                    try:
+                        await Client.run_until_disconnected()
+                    except Exception as E:
+                        logging.critical('exception: %s', E)
+                        await asyncio.sleep(30)
             else:
                 logging.warning('no plugins in session %s', BaseName)
 

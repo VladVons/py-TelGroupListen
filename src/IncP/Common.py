@@ -50,3 +50,24 @@ def DynImport(aPath: str, aClass: str) -> tuple:
     except ModuleNotFoundError as E:
         Err = str(E)
     return (TClass, Err)
+
+def Conf2To1(aConf: dict):
+    Tasks = []
+    for xTask in aConf['tasks']:
+        Plugins = []
+        for xGroup in xTask['groups']:
+            Plugins.append({
+                'class': xTask['class'],
+                'group': xGroup,
+                'trigger': xTask['trigger']
+            })
+        Tasks.append({
+            'enabled': xTask['enabled'],
+            'session': xTask['session'],
+            'plugins': Plugins
+        })
+    Res = {
+        'ver': 1,
+        'tasks': Tasks
+    }
+    return Res

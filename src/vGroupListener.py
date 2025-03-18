@@ -3,11 +3,12 @@
 # License: GNU, see LICENSE for more details
 
 
+import json
 import asyncio
 import logging
 import argparse
 #
-from IncP.Common import InitLog, LoadFileJson, GetAppVer
+from IncP.Common import InitLog, LoadFileJson, GetAppVer, Conf2To1
 from IncP.GroupListen import TGroupListen
 
 class TApp():
@@ -26,10 +27,15 @@ class TApp():
         AppName = self.AppVer['app_name'].rsplit('.', maxsplit=1)[0]
         InitLog(f'{AppName}.log')
 
-        Values = list(self.AppVer.values())
-        logging.info(', '.join(Values))
+        About = list(self.AppVer.values())
+        logging.info(', '.join(About))
 
         Conf = LoadFileJson(f'data/{Options.task}')
+        if (Conf.get('ver', 1) == 2):
+            Conf = Conf2To1(Conf)
+            # with open('Conf2To1.json', 'w', encoding = 'utf-8') as F:
+            #     json.dump(Conf, F, indent=2, ensure_ascii=False)
+
         Tasks = []
         for xConf in Conf['tasks']:
             if (xConf.get('enabled', True)):

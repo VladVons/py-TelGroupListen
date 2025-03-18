@@ -1,0 +1,38 @@
+{
+  "ver": 2,
+  "tasks": [
+    {
+      "enabled": true,
+      "session": "14158156130",
+      "class": "Respond",
+      "trigger": "data/triggers/test.txt",
+      "groups": [
+        "udalenka_chatik",
+        "workinchicago",
+        "vacancies_infobiz",
+        "gilbertwil",
+        "ukraina_eskort",
+        "savannamlbb",
+        "hashira_mlbb",
+        "mt103202transfer",
+        "lowzemgwlls",
+        "Nash_miami",
+        "rostov_rabotaet",
+        "gryzovik",
+        "freelaceworkchat",
+        "detiorlando",
+        "miami2020russian",
+        "footbolteame",
+        "tempesstgacor",
+        "new_york_ru",
+        "grandmobail_chat",
+        "concentrat_voronezh",
+        "chatskzry",
+        "work_in_miami_florida",
+        "unityservices",
+        "perevozshik7777",
+        "concentratcertain9"
+      ]
+    }
+  ]
+}

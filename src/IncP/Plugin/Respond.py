@@ -21,7 +21,6 @@ class TPluginRespond(TPlugin):
     async def OnEvent(self, aEvent):
         global gCount
         gCount += 1
-
         self.Count += 1
 
         Highlighted, WordsCount = self.HighlightWords(self.reTriggerWords, aEvent.message.text)

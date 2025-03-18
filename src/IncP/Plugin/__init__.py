@@ -24,6 +24,14 @@ class TPlugin():
         return Res
 
     @staticmethod
+    def HighlightWords(aRe, aText: str) -> tuple:
+        def _Highlight(aMatch):
+            return f'\033[91m{aMatch.group()}\033[0m'
+
+        Text = aRe.sub(_Highlight, aText)
+        return (Text, Text.count('[0m'))
+
+    @staticmethod
     def LoadFileWordsRe(aFile: str) -> object:
         Lines = LoadFileTxt(aFile)
         Words = set(
@@ -34,14 +42,6 @@ class TPlugin():
 
         Pattern = r'\b(' + '|'.join(map(re.escape, Words)) + r')\b'
         return re.compile(Pattern, flags=re.IGNORECASE)
-
-    @staticmethod
-    def HighlightWords(aRe, aText: str) -> tuple:
-        def _Highlight(aMatch):
-            return f'\033[91m{aMatch.group()}\033[0m'
-
-        Text = aRe.sub(_Highlight, aText)
-        return (Text, Text.count('[0m'))
 
     async def OnEvent(self, aEvent):
         raise NotImplementedError()
