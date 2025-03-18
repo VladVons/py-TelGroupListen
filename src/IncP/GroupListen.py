@@ -52,7 +52,8 @@ class TGroupListen():
             for xConf in self.Conf['plugins']:
                 if (xConf.get('enabled', True)):
                     Group = xConf['group'].lower()
-                    assert(Group not in Groups), f'group already exists {Group}'
+                    if (Group in Groups):
+                        logging.warning('group already exists %s', Group)
                     Groups.add(Group)
 
                     await self._AddPlugin(Client, xConf)
