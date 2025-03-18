@@ -5,129 +5,13 @@
       "session": "myName",
       "plugins": [
         {
-          "enabled": true,
           "class": "Respond",
-          "group": "udalenka_chatik",
+          "group": "FindWares_UA",
           "trigger": "data/triggers/test.txt"
         },
         {
           "class": "Respond",
-          "group": "workinchicago",
-          "trigger": "data/triggers/test.txt"
-        },        {
-          "class": "Respond",
-          "group": "vacancies_infobiz",
-          "trigger": "data/triggers/test.txt"
-        },        {
-          "class": "Respond",
-          "group": "gilbertwil",
-          "trigger": "data/triggers/test.txt"
-        },        {
-          "class": "Respond",
-          "group": "ukraina_eskort",
-          "trigger": "data/triggers/test.txt"
-        },        {
-          "class": "Respond",
-          "group": "savannamlbb",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "hashira_mlbb",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "mt103202transfer",
-          "trigger": "data/triggers/test.txt"
-        },        {
-          "class": "Respond",
-          "group": "lowzemgwlls",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "nash_miami",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "rostov_rabotaet",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "gryzovik",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "freelaceworkchat",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "detiorlando",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "miami2020russian",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "footbolteame",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "tempesstgacor",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "new_york_ru",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "grandmobail_chat",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "concentrat_voronezh",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "chatskzry",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "work_in_miami_florida",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "unityservices",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "perevozshik7777",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "concentratcertain9",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "ydalenkachat",
+          "group": "FindWares_UA2",
           "trigger": "data/triggers/test.txt"
         }
       ]
