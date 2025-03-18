@@ -2,33 +2,44 @@
 # Author: Vladimir Vons <VladVons@gmail.com>
 # License: GNU, see LICENSE for more details
 
+
 import asyncio
 import logging
+import argparse
 #
 from IncP.Common import InitLog, LoadFileJson, GetAppVer
 from IncP.GroupListen import TGroupListen
 
+class TApp():
+    def __init__(self):
+        self.AppVer = GetAppVer()
 
-async def Main(aFile: str):
-    AppVer = GetAppVer()
-    AppName = AppVer["app_name"].rsplit('.', maxsplit=1)[0]
-    InitLog(f'{AppName}.log')
+    def _InitOptions(self):
+        Usage = f'usage: {self.AppVer['app_name']} [options] arg'
+        Parser = argparse.ArgumentParser(usage = Usage)
+        Parser.add_argument('-t', '--task', help='task', default='task.json')
+        return Parser.parse_args()
 
-    Values = list(AppVer.values())
-    logging.info(', '.join(Values))
+    async def Run(self):
+        Options = self._InitOptions()
 
-    Conf = LoadFileJson(f'data/{aFile}')
-    Tasks = []
-    for xConf in Conf:
-        if (xConf.get('enabled', True)):
-            Method = TGroupListen(xConf).Exec()
-            Task = asyncio.create_task(Method)
-            Tasks.append(Task)
+        AppName = self.AppVer['app_name'].rsplit('.', maxsplit=1)[0]
+        InitLog(f'{AppName}.log')
 
-    if (Tasks):
-        await asyncio.gather(*Tasks)
-    else:
-        logging.warning('No tasks to execute')
+        Values = list(self.AppVer.values())
+        logging.info(', '.join(Values))
 
-Job = 'job_01.json'
-asyncio.run(Main(Job))
+        Conf = LoadFileJson(f'data/{Options.task}')
+        Tasks = []
+        for xConf in Conf['tasks']:
+            if (xConf.get('enabled', True)):
+                Method = TGroupListen(xConf).Run()
+                Task = asyncio.create_task(Method)
+                Tasks.append(Task)
+
+        if (Tasks):
+            await asyncio.gather(*Tasks)
+        else:
+            logging.warning('no tasks to execute')
+
+asyncio.run(TApp().Run())

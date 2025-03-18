@@ -2,6 +2,7 @@
 # Author: Vladimir Vons <VladVons@gmail.com>
 # License: GNU, see LICENSE for more details
 
+
 import os
 import logging
 import psutil
@@ -17,41 +18,48 @@ class TGroupListen():
     def __init__(self, aConf: dict):
         self.Conf = aConf
 
-        PluginName = aConf['plugin']['name']
-        Class, Err = DynImport(f'IncP.Plugin.{PluginName}', 'TPlugin' + PluginName)
-        assert(Class), f'Plugin loading error {Err}'
-        self.Plugin = Class(aConf['plugin'])
+    async def _AddPlugin(self, aClient, aConf: dict) -> bool:
+        ConfGroup = aConf['group']
+        try:
+            if ('/joinchat/' in ConfGroup):
+                Hash = ConfGroup.rsplit('/', maxsplit=1)[-1]
+                Join = await aClient(ImportChatInviteRequest(Hash))
+            else:
+                Join = await aClient(JoinChannelRequest(ConfGroup))
 
-    async def Exec(self):
-        Session = f'data/sessions/{self.Conf["session"]}'
-        Params = LoadFileJson(f'{Session}.json')
-        Group = self.Conf.get('group') if self.Conf.get('group') else self.Conf.get('invite_link')
-        await self._Connect(f'{Session}.session', Group, Params)
+            ConfClass = aConf['class']
+            TClass, Err = DynImport(f'IncP.Plugin.{ConfClass}', 'TPlugin' + ConfClass)
+            assert(TClass), f'plugin loading error {Err}'
+            Chat = Join.chats[-1]
+            Class = TClass(Chat, aConf)
 
-    async def _Connect(self, aName: str, aGroupUser: str, aParams: dict):
+            aClient.add_event_handler(Class.OnEvent, events.NewMessage(chats=ConfGroup))
+            logging.info('joined group %s', ConfGroup)
+            return True
+        except Exception as E:
+            logging.error('joining group: %s. %s', ConfGroup, E)
+
+    async def _Session(self, aName: str, aParams: dict):
         async with TelegramClient(aName, **aParams) as Client:
-            await Client.start()
-
             Me = await Client.get_me()
             logging.info('session: %s, name: %s %s, phone: %s', aName, Me.first_name, Me.last_name, Me.phone)
 
-            Process = psutil.Process(os.getpid())
-            logging.info('Memory used: %.2f Mb', Process.memory_info().rss / (1024 * 1024))
+            Groups = set()
+            for xConf in self.Conf['plugins']:
+                if (xConf.get('enabled', True)):
+                    Group = xConf['group'].lower()
+                    assert(Group not in Groups), f'group already exists {Group}'
+                    Groups.add(Group)
 
-            try:
-                if ('/joinchat/' in aGroupUser):
-                    Hash = aGroupUser.rsplit('/', maxsplit=1)[-1]
-                    await Client(ImportChatInviteRequest(Hash))
-                else:
-                    await Client(JoinChannelRequest(aGroupUser))
-                logging.info('Joined group')
-            except Exception as E:
-                logging.error('joining group: %s', E)
-                return
+                    await self._AddPlugin(Client, xConf)
 
-            logging.info('Listening for messages ...')
-            @Client.on(events.NewMessage())
-            async def _HandleNewMessage(event):
-                await self.Plugin.OnEvent(event)
-
+            logging.info('listening for events ...')
             await Client.run_until_disconnected()
+
+    async def Run(self):
+        Process = psutil.Process(os.getpid())
+        logging.info('memory used: %.2f Mb', Process.memory_info().rss / (1024 ** 2))
+
+        Session = f'data/sessions/{self.Conf["session"]}'
+        Params = LoadFileJson(f'{Session}.json')
+        await self._Session(f'{Session}.session', Params)

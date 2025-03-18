@@ -4,7 +4,6 @@
 
 
 import re
-import logging
 #
 from IncP.Common import LoadFileTxt
 
@@ -16,14 +15,13 @@ class TPlugin():
     @staticmethod
     async def GetSenderInfo(aEvent):
         Sender = await aEvent.get_sender()
-
-        Filtered = filter(None, (Sender.first_name, Sender.last_name))
-        UserName = f'(@{Sender.username})' if hasattr(Sender, 'username') and Sender.username else ''
-        return {
-            'first_name': ' '.join(Filtered),
-            'user_name': UserName,
+        Res = {
+            'first_name': getattr(Sender, 'first_name', None),
+            'last_name': getattr(Sender, 'last_name', None),
+            'user_name': getattr(Sender, 'username', None),
             'time': aEvent.message.date.strftime('%Y-%m-%d %H:%M:%S')
         }
+        return Res
 
     @staticmethod
     def LoadFileWordsRe(aFile: str) -> object:
