@@ -6,14 +6,19 @@ import os
 import sys
 import logging
 import json
+import sqlite3
 #
 from . import __version__, __date__
 
+gDbConn = None
+
 def GetAppVer() -> dict:
     File = sys.modules['__main__'].__file__
+    File = os.path.basename(File)
+    AppName = File.rsplit('.', maxsplit=1)[0]
 
     return {
-        'app_name': os.path.basename(File),
+        'app_name': AppName,
         'app_ver' : __version__,
         'app_date': __date__,
         'author':  'Vladimir Vons, VladVons@gmail.com'
@@ -71,3 +76,34 @@ def Conf2To1(aConf: dict):
         'tasks': Tasks
     }
     return Res
+
+class TDbLog():
+    def __init__(self):
+        AppVer = GetAppVer()
+        self.Conn = sqlite3.connect(AppVer['app_name'] + '.db')
+        self.Cursor = self.Conn.cursor()
+
+        self.Cursor.execute('''
+            create table if not exists plugin (
+                id integer primary key autoincrement,
+                created text default current_timestamp,
+                plugin text not null,
+                grp text not null,
+                user text not null,
+                message text
+            )
+        ''')
+
+    def __del__(self):
+        self.Conn.commit()
+        self.Conn.close()
+
+    def Add(self, aPlugin: str, aGroup: str, aUser: str, aMessage: str):
+        Sql = f'''
+            INSERT INTO plugin (plugin, grp, user, message)
+            VALUES ('{aPlugin}', '{aGroup}', '{aUser}', '{aMessage}')
+        '''
+        self.Cursor.execute(Sql)
+        self.Conn.commit()
+
+DbLog = TDbLog()

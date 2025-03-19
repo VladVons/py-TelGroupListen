@@ -3,9 +3,11 @@
 #License:     GNU, see LICENSE for more details
 
 
+import os
 import asyncio
 import logging
 #
+from IncP.Common import DbLog
 from . import TPlugin
 
 gCount = 0
@@ -29,6 +31,8 @@ class TPluginRespond(TPlugin):
             #Info = await self.GetSenderInfo(aEvent)
             #logging.info('%s: %s', self.Chat.username, Info)
             #logging.info(Highlighted)
+
+            DbLog.Add(self.Conf['class'], self.Conf['group'], self.Chat.username, aEvent.message.text)
 
             #await asyncio.sleep(20)
             #await aEvent.respond('text of delayed response')

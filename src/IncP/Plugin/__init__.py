@@ -7,7 +7,6 @@ import re
 #
 from IncP.Common import LoadFileTxt
 
-
 class TPlugin():
     def __init__(self, aConf: dict):
         self.Conf = aConf

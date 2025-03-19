@@ -2,6 +2,7 @@
 *.log
 *.session
 *.session-journal
+*.db
 
 __pycache__
 .idea
