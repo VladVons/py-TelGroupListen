@@ -8,8 +8,6 @@
       "enabled": true,
       "comment": "FindWares bot",
       "session": "myBot",
-      "api_id": 27489309,
-      "api_hash": "aa5afcef4665d19b80710ef1d9ce9b46",
       "bot_token": "8179886965:AAHe_4_jOxWbvfLLifMv-gmK8AYKpDRv-pI",
       "plugins": [
         {
