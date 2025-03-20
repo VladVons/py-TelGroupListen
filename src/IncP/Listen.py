@@ -7,7 +7,7 @@ import os
 import asyncio
 import logging
 import psutil
-from telethon import TelegramClient
+from telethon import TelegramClient, events
 from IncP.Common import LoadFileJson, DynImport
 
 
@@ -21,6 +21,18 @@ class TListen():
 
     async def _OnSession(self, aClient):
         return aClient
+
+    @staticmethod
+    def _EventMethod(aConf: dict, aClass) -> tuple:
+        ConfEvent = aConf.get('event', 'NewMessage')
+        EventType = getattr(events, ConfEvent, None)
+        assert(EventType), f'no event supported {ConfEvent}'
+
+        ConfMethod = aConf.get('method', 'OnEvent')
+        Method = getattr(aClass, ConfMethod, None)
+        assert(Method), f'no method supported {ConfMethod}'
+
+        return (EventType, Method)
 
     async def _Session(self, aName: str, aParams: dict):
         logging.info('session: %s %s', aName, self.ConfTask.get('comment', ''))

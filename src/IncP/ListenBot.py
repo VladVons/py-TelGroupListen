@@ -4,8 +4,6 @@
 
 
 import logging
-from telethon import events
-#
 from .Listen import TListen
 
 
@@ -19,14 +17,7 @@ class TListenBot(TListen):
 
     async def _OnPlugin(self, aClient, aConf: dict, aTClass: object) -> bool:
         Class = aTClass(None, aConf)
-
-        ConfEvent = aConf.get('event', 'NewMessage')
-        EventType = getattr(events, ConfEvent, None)
-        assert(EventType), f'no event supported {ConfEvent}'
-
-        ConfMethod = aConf.get('method', 'OnEvent')
-        Method = getattr(Class, ConfMethod, None)
-        assert(Method), f'no method supported {ConfMethod}'
-
+        EventType, Method = self._EventMethod(aConf, Class)
         aClient.add_event_handler(Method, EventType())
+
         logging.info('joined bot')

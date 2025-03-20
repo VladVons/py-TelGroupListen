@@ -60,10 +60,7 @@ class TListenGroup(TListen):
         Chat = Join.chats[-1]
         aConf['trigger'] = f'{self.ConfApp["dir_triggers"]}/{aConf["trigger"]}'
         Class = aTClass(Chat, aConf)
-
-        ConfEvent = aConf.get('event', 'NewMessage')
-        EventType = getattr(events, ConfEvent, None)
-        assert(EventType), f'no event supported {ConfEvent}'
-        aClient.add_event_handler(Class.OnEvent, EventType(chats=ConfGroup))
+        EventType, Method = self._EventMethod(aConf, Class)
+        aClient.add_event_handler(Method, EventType(chats=ConfGroup))
 
         logging.info('joined  %s', ConfGroup)
