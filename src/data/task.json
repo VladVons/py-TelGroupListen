@@ -2,20 +2,21 @@
   "app": {
     "dir_triggers": "data/triggers",
     "dir_sessions": "data/sessions",
-    "dir_plugins": "IncP/Plugin"
+    "class": "ListenGroup"
   },
   "tasks": [
     {
       "enabled": true,
       "session": "myName",
+      "phone": "+380993874121",
       "plugins": [
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "FindWares_UA",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "FindWares_UA2",
           "trigger": "test.txt"
         }

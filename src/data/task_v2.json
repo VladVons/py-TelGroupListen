@@ -3,13 +3,13 @@
   "app": {
     "dir_triggers": "data/triggers",
     "dir_sessions": "data/sessions",
-    "dir_plugins": "IncP/Plugin"
+    "class": "ListenGroup"
   },
   "tasks": [
     {
       "enabled": true,
       "session": "14158156130",
-      "class": "Respond",
+      "class": "GroupMessageFilter",
       "trigger": "test.txt",
       "groups": [
         "udalenka_chatik",

@@ -3,13 +3,12 @@
 # License: GNU, see LICENSE for more details
 
 
-import json
 import asyncio
 import logging
 import argparse
 #
 from IncP.Common import InitLog, LoadFileJson, GetAppVer
-from IncP.GroupListen import TGroupListen
+
 
 class TApp():
     def __init__(self):
@@ -31,22 +30,16 @@ class TApp():
         logging.info(', '.join(About))
 
         Conf = LoadFileJson(f'data/{Options.task}')
-        if (Conf.get('ver', 1) == 2):
-            Conf = TGroupListen.Conf2To1(Conf)
-            # with open('Conf2To1.json', 'w', encoding = 'utf-8') as F:
-            #     json.dump(Conf, F, indent=2, ensure_ascii=False)
-
-        if ('app' not in Conf):
-            Conf['app'] = {
-                'dir_triggers': 'data/triggers',
-                'dir_sessions': 'data/sessions',
-                'dir_plugins': 'IncP/Plugin'
-            }
+        ConfClass = Conf['app']['class']
+        Module = __import__(f'IncP.{ConfClass}', fromlist=['T' + ConfClass])
+        Class = getattr(Module, 'T' + ConfClass)
+        if (hasattr(Class, 'ConfCheck')):
+            Class.ConfCheck(Conf)
 
         Tasks = []
         for xConf in Conf['tasks']:
             if (xConf.get('enabled', True)):
-                Method = TGroupListen(Conf['app'], xConf).Run()
+                Method = Class(Conf['app'], xConf).Run()
                 Task = asyncio.create_task(Method)
                 Tasks.append(Task)
 

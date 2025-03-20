@@ -3,7 +3,7 @@
   "app": {
     "dir_triggers": "data/triggers",
     "dir_sessions": "data/sessions",
-    "dir_plugins": "IncP/Plugin"
+    "class": "ListenGroup"
   },
   "tasks": [
     {
@@ -11,127 +11,129 @@
       "session": "14158156130",
       "plugins": [
         {
-          "class": "Respond",
+          "enabled": true,
+          "event": "NewMessage",
+          "class": "GroupMessageFilter",
           "group": "udalenka_chatik",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "workinchicago",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "vacancies_infobiz",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "gilbertwil",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "ukraina_eskort",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "savannamlbb",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "hashira_mlbb",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "mt103202transfer",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "lowzemgwlls",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "Nash_miami",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "rostov_rabotaet",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "gryzovik",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "freelaceworkchat",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "detiorlando",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "miami2020russian",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "footbolteame",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "tempesstgacor",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "new_york_ru",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "grandmobail_chat",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "concentrat_voronezh",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "chatskzry",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "work_in_miami_florida",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "unityservices",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "perevozshik7777",
           "trigger": "test.txt"
         },
         {
-          "class": "Respond",
+          "class": "GroupMessageFilter",
           "group": "concentratcertain9",
           "trigger": "test.txt"
         }

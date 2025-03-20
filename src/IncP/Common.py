@@ -8,7 +8,9 @@ import logging
 import json
 import sqlite3
 #
-from . import __version__, __date__
+
+__version__ = '1.0.5'
+__date__ =  '2025.03.19'
 
 gDbConn = None
 

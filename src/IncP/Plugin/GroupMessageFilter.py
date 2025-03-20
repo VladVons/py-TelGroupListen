@@ -12,7 +12,7 @@ from . import TPlugin
 
 gCount = 0
 
-class TPluginRespond(TPlugin):
+class TPluginGroupMessageFilter(TPlugin):
     def __init__(self, aChat, aConf: dict):
         super().__init__(aConf)
         self.Chat = aChat

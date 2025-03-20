@@ -9,7 +9,7 @@
             "console": "integratedTerminal",
             "purpose":["debug-in-terminal"],
             "justMyCode": true,
-            "args": ["--task=task_v2.json"]
+            "args": ["--task=task_v1.json"]
          }
     ]
 }
