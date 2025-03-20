@@ -1,4 +1,9 @@
 {
+  "app": {
+    "dir_triggers": "data/triggers",
+    "dir_sessions": "data/sessions",
+    "dir_plugins": "IncP/Plugin"
+  },
   "tasks": [
     {
       "enabled": true,
@@ -7,17 +12,12 @@
         {
           "class": "Respond",
           "group": "FindWares_UA",
-          "trigger": "data/triggers/test.txt"
+          "trigger": "test.txt"
         },
         {
           "class": "Respond",
           "group": "FindWares_UA2",
-          "trigger": "data/triggers/test.txt"
-        },
-        {
-          "class": "Respond",
-          "group": "compbest_ua",
-          "trigger": "data/triggers/test.txt"
+          "trigger": "test.txt"
         }
       ]
     }

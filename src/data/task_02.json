@@ -7,12 +7,12 @@
         {
           "class": "Respond",
           "group": "FindWares_UA",
-          "trigger": "data/triggers/test.txt"
+          "trigger": "test.txt"
         },
         {
           "class": "Respond",
           "group": "FindWares_UA2",
-          "trigger": "data/triggers/test.txt"
+          "trigger": "test.txt"
         }
       ]
     }

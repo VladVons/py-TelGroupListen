@@ -1,11 +1,16 @@
 {
   "ver": 2,
+  "app": {
+    "dir_triggers": "data/triggers",
+    "dir_sessions": "data/sessions",
+    "dir_plugins": "IncP/Plugin"
+  },
   "tasks": [
     {
       "enabled": true,
       "session": "14158156130",
       "class": "Respond",
-      "trigger": "data/triggers/test.txt",
+      "trigger": "test.txt",
       "groups": [
         "udalenka_chatik",
         "workinchicago",

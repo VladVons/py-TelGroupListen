@@ -12,7 +12,7 @@ class TPlugin():
         self.Conf = aConf
 
     @staticmethod
-    async def GetSenderInfo(aEvent):
+    async def GetSenderInfo(aEvent) -> dict:
         Sender = await aEvent.get_sender()
         Res = {
             'first_name': getattr(Sender, 'first_name', None),

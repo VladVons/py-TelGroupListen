@@ -16,8 +16,31 @@ from IncP.Common import LoadFileJson, DynImport
 
 
 class TGroupListen():
-    def __init__(self, aConf: dict):
-        self.Conf = aConf
+    def __init__(self, aConfApp: dict, aConfTask: dict):
+        self.ConfTask = aConfTask
+        self.ConfApp = aConfApp
+
+    @staticmethod
+    def Conf2To1(aConf: dict) -> dict:
+        Tasks = []
+        for xTask in aConf['tasks']:
+            Plugins = []
+            for xGroup in xTask['groups']:
+                Plugins.append({
+                    'class': xTask['class'],
+                    'group': xGroup,
+                    'trigger': xTask['trigger']
+                })
+            Tasks.append({
+                'enabled': xTask['enabled'],
+                'session': xTask['session'],
+                'plugins': Plugins
+            })
+        Res = {
+            'ver': 1,
+            'tasks': Tasks
+        }
+        return Res
 
     async def _AddPlugin(self, aClient, aConf: dict) -> bool:
         ConfGroup = aConf['group']
@@ -29,7 +52,8 @@ class TGroupListen():
                 Join = await aClient(JoinChannelRequest(ConfGroup))
 
             ConfClass = aConf['class']
-            TClass, Err = DynImport(f'IncP.Plugin.{ConfClass}', 'TPlugin' + ConfClass)
+            Plugin = f'{self.ConfApp["dir_plugins"]}/{ConfClass}'.replace('/', '.')
+            TClass, Err = DynImport(Plugin, 'TPlugin' + ConfClass)
             assert(TClass), f'plugin loading error {Err}'
             Chat = Join.chats[-1]
             Class = TClass(Chat, aConf)
@@ -50,13 +74,14 @@ class TGroupListen():
             logging.info('session: %s, name: %s %s, phone: %s', aName, Me.first_name, Me.last_name, Me.phone)
 
             Groups = set()
-            for xConf in self.Conf['plugins']:
+            for xConf in self.ConfTask['plugins']:
                 if (xConf.get('enabled', True)):
                     Group = xConf['group'].lower()
                     if (Group in Groups):
                         logging.warning('group already exists %s', Group)
                     Groups.add(Group)
 
+                    xConf['trigger'] = f'{self.ConfApp["dir_triggers"]}/{xConf["trigger"]}'
                     await self._AddPlugin(Client, xConf)
 
             BaseName = aName.rsplit('/', maxsplit=1)[-1]
@@ -75,6 +100,6 @@ class TGroupListen():
         Process = psutil.Process(os.getpid())
         logging.info('memory used: %.2f Mb', Process.memory_info().rss / (1024 ** 2))
 
-        Session = f'data/sessions/{self.Conf["session"]}'
+        Session = f'{self.ConfApp["dir_sessions"]}/{self.ConfTask["session"]}'
         Params = LoadFileJson(f'{Session}.json')
-        await self._Session(f'{Session}.session', Params)
+        await self._Session(Session, Params)
