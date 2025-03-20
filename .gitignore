@@ -4,5 +4,6 @@
 *.session-journal
 *.db
 
+temp/
 __pycache__
 .idea
