@@ -4,6 +4,7 @@
 
 
 import re
+import logging
 #
 from IncP.Common import LoadFileTxt
 
@@ -41,3 +42,6 @@ class TPlugin():
 
         Pattern = r'\b(' + '|'.join(map(re.escape, Words)) + r')\b'
         return re.compile(Pattern, flags=re.IGNORECASE)
+
+    async def OnEvent(self, _aEvent):
+        logging.warning('default method OnEvent()')
