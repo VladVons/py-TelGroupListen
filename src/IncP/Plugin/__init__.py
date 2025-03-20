@@ -41,6 +41,3 @@ class TPlugin():
 
         Pattern = r'\b(' + '|'.join(map(re.escape, Words)) + r')\b'
         return re.compile(Pattern, flags=re.IGNORECASE)
-
-    async def OnEvent(self, aEvent):
-        raise NotImplementedError()

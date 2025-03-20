@@ -23,5 +23,10 @@ class TListenBot(TListen):
         ConfEvent = aConf.get('event', 'NewMessage')
         EventType = getattr(events, ConfEvent, None)
         assert(EventType), f'no event supported {ConfEvent}'
-        aClient.add_event_handler(Class.OnEvent, EventType())
+
+        ConfMethod = aConf.get('method', 'OnEvent')
+        Method = getattr(Class, ConfMethod, None)
+        assert(Method), f'no method supported {ConfMethod}'
+
+        aClient.add_event_handler(Method, EventType())
         logging.info('joined bot')

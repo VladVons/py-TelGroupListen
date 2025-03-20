@@ -11,7 +11,14 @@
       "bot_token": "8179886965:AAHe_4_jOxWbvfLLifMv-gmK8AYKpDRv-pI",
       "plugins": [
         {
-          "class": "BotRespond"
+          "class": "BotRespond",
+          "event": "NewMessage",
+          "method": "OnNewMessage"
+        },
+        {
+          "class": "BotRespond",
+          "event": "CallbackQuery",
+          "method": "OnCallbackQuery"
         }
       ]
     }
