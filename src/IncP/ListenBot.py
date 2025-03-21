@@ -31,4 +31,4 @@ class TListenBot(TListen):
         EventType, Method = self._EventMethod(aConf, Class)
         aClient.add_event_handler(Method, EventType())
 
-        logging.info('joined bot')
+        logging.info('joined bot method %s.%s()', Class.__class__.__name__, Method.__name__)

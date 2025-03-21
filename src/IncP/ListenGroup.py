@@ -4,8 +4,6 @@
 
 
 import logging
-#
-from telethon import events
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 #
@@ -15,6 +13,7 @@ from .Listen import TListen
 class TListenGroup(TListen):
     @staticmethod
     def ConfCheck(aConf: dict) -> dict:
+        # convert compact format v2 into v1
         def Conf2To1() -> dict:
             Tasks = []
             for xTask in aConf['tasks']:
@@ -57,10 +56,11 @@ class TListenGroup(TListen):
         else:
             Join = await aClient(JoinChannelRequest(ConfGroup))
 
-        Chat = Join.chats[-1]
+        # each group has own class handler
+        CurChat = Join.chats[-1]
         aConf['trigger'] = f'{self.ConfApp["dir_triggers"]}/{aConf["trigger"]}'
-        Class = aTClass(Chat, aConf)
+        Class = aTClass(CurChat, aConf)
         EventType, Method = self._EventMethod(aConf, Class)
         aClient.add_event_handler(Method, EventType(chats=ConfGroup))
 
-        logging.info('joined  %s', ConfGroup)
+        logging.info('joined group %s %s.%s()', ConfGroup, Class.__class__.__name__, Method.__name__)

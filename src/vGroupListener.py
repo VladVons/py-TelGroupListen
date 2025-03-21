@@ -15,6 +15,7 @@ class TApp():
         self.AppVer = GetAppVer()
 
     def _InitOptions(self):
+        # command line parser
         Usage = f'usage: {self.AppVer['app_name']} [options] arg'
         Parser = argparse.ArgumentParser(usage = Usage)
         Parser.add_argument('-t', '--task', help='task', default='task.json')
@@ -26,16 +27,21 @@ class TApp():
         AppName = self.AppVer['app_name'].rsplit('.', maxsplit=1)[0]
         InitLog(f'{AppName}.log')
 
+        # show version, author etc
         About = list(self.AppVer.values())
         logging.info(', '.join(About))
 
+        # instead of static import use dynamic
         Conf = LoadFileJson(f'data/{Options.task}')
         ConfClass = Conf['app']['class']
         Module = __import__(f'IncP.{ConfClass}', fromlist=['T' + ConfClass])
         Class = getattr(Module, 'T' + ConfClass)
+
+        # check conf version. it may supports multiple formats
         if (hasattr(Class, 'ConfCheck')):
             Class.ConfCheck(Conf)
 
+        # create async tasks
         Tasks = []
         for xConf in Conf['tasks']:
             if (xConf.get('enabled', True)):
@@ -43,9 +49,11 @@ class TApp():
                 Task = asyncio.create_task(Method)
                 Tasks.append(Task)
 
+        # run async tasks
         if (Tasks):
             await asyncio.gather(*Tasks)
         else:
             logging.warning('no tasks to execute')
 
-asyncio.run(TApp().Run())
+MainTask = TApp().Run()
+asyncio.run(MainTask)

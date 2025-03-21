@@ -43,6 +43,7 @@ class TListen():
         await Client.connect()
         await self._OnSession(Client)
 
+        # dynamic plugin class loader from IncP.Plugin
         PluginCount = 0
         for xConf in self.ConfTask.get('plugins', []):
             if (xConf.get('enabled', True)):
@@ -55,6 +56,7 @@ class TListen():
                 except Exception as E:
                     logging.error('add plugin: %s', E)
 
+        # run eternal loop for handling prepared events
         if (PluginCount):
             while True:
                 logging.info('listening session %s for events ...', aName)
