@@ -24,10 +24,12 @@ class TListen():
 
     @staticmethod
     def _EventMethod(aConf: dict, aClass) -> tuple:
+        # default 'event' is events.NewMessage()
         ConfEvent = aConf.get('event', 'NewMessage')
         EventType = getattr(events, ConfEvent, None)
         assert(EventType), f'no event supported {ConfEvent}'
 
+        # default class 'method' is OnEvent()
         ConfMethod = aConf.get('method', 'OnEvent')
         Method = getattr(aClass, ConfMethod, None)
         assert(Method), f'no method supported {ConfMethod}'
