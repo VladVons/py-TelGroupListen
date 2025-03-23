@@ -68,10 +68,11 @@ class TDbLog():
             create table if not exists plugin (
                 id integer primary key autoincrement,
                 created text default current_timestamp,
-                plugin text not null,
+                plugin char(32) not null,
                 grp text not null,
-                user text not null,
-                message text
+                user char(32) not null,
+                msg text,
+                msg_hash char(32) unique
             )
         ''')
 
@@ -81,7 +82,7 @@ class TDbLog():
 
     def Add(self, aPlugin: str, aGroup: str, aUser: str, aMessage: str):
         Sql = f'''
-            INSERT INTO plugin (plugin, grp, user, message)
+            INSERT INTO plugin (plugin, grp, user, msg)
             VALUES ('{aPlugin}', '{aGroup}', '{aUser}', '{aMessage}')
         '''
         self.Cursor.execute(Sql)

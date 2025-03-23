@@ -9,7 +9,7 @@
             "console": "integratedTerminal",
             "purpose":["debug-in-terminal"],
             "justMyCode": true,
-            "args": ["--task=bot_findwares.json"]
+            "args": ["--task=grp_uniq.json"]
          }
     ]
 }

@@ -13,7 +13,7 @@ from .Listen import TListen
 class TListenGroup(TListen):
     @staticmethod
     def ConfCheck(aConf: dict) -> dict:
-        # convert compact format v2 into v1
+        # convert compact conf format v2 into v1
         def Conf2To1() -> dict:
             Tasks = []
             for xTask in aConf['tasks']:
@@ -21,6 +21,8 @@ class TListenGroup(TListen):
                 for xGroup in xTask['groups']:
                     Plugins.append({
                         'class': xTask['class'],
+                        'event': xTask.get('event', 'NewMessage'),
+                        'method': xTask.get('method', 'OnNewMessage'),
                         'group': xGroup,
                         'trigger': xTask['trigger']
                     })
@@ -31,7 +33,8 @@ class TListenGroup(TListen):
                 })
             Res = {
                 'ver': 1,
-                'tasks': Tasks
+                'tasks': Tasks,
+                'app': aConf['app']
             }
             return Res
 
@@ -40,6 +43,7 @@ class TListenGroup(TListen):
             # import json
             # with open('Conf2To1.json', 'w', encoding = 'utf-8') as F:
             #     json.dump(Conf, F, indent=2, ensure_ascii=False)
+        return aConf
 
     async def _OnSession(self, aClient):
         if (not await aClient.is_user_authorized()):

@@ -9,8 +9,9 @@
     {
       "enabled": true,
       "session": "14158156130",
-      "class": " GroupMessageFilter",
-      "trigger": "test.txt",
+      "class": "GroupMessageUniq",
+      "event": "NewMessage",
+      "trigger": "brutal.txt",
       "groups": [
         "udalenka_chatik",
         "workinchicago",

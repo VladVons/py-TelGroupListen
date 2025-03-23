@@ -31,7 +31,7 @@ class TApp():
         About = list(self.AppVer.values())
         logging.info(', '.join(About))
 
-        # instead of static import use dynamic
+        # instead of static import use dynamic. IncP.ListenBot, IncP.ListenGroup, etc
         Conf = LoadFileJson(f'data/{Options.task}')
         ConfClass = Conf['app']['class']
         Module = __import__(f'IncP.{ConfClass}', fromlist=['T' + ConfClass])
@@ -39,7 +39,7 @@ class TApp():
 
         # check conf version. it may supports multiple formats
         if (hasattr(Class, 'ConfCheck')):
-            Class.ConfCheck(Conf)
+            Conf = Class.ConfCheck(Conf)
 
         # create async tasks
         Tasks = []
