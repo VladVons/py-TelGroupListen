@@ -9,8 +9,8 @@ import json
 import sqlite3
 #
 
-__version__ = '1.0.5'
-__date__ =  '2025.03.19'
+__version__ = '1.0.6'
+__date__ =  '2025.03.23'
 
 gDbConn = None
 
