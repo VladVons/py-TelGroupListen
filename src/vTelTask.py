@@ -31,10 +31,10 @@ class TApp():
         About = list(self.AppVer.values())
         logging.info(', '.join(About))
 
-        # instead of static import use dynamic. IncP.ListenBot, IncP.ListenGroup, etc
+        # instead of static import use dynamic
         Conf = LoadFileJson(f'data/{Options.task}')
         ConfClass = Conf['app']['class']
-        Module = __import__(f'IncP.{ConfClass}', fromlist=['T' + ConfClass])
+        Module = __import__(f'Plugin.{ConfClass}', fromlist=['T' + ConfClass])
         Class = getattr(Module, 'T' + ConfClass)
 
         # check conf version. it may supports multiple formats

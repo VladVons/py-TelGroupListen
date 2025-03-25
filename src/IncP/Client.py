@@ -1,6 +1,6 @@
-#Created:     2025.03.17
-#Author:      Vladimir Vons <VladVons@gmail.com>
-#License:     GNU, see LICENSE for more details
+# Created:     2025.03.17
+# Author:      Vladimir Vons <VladVons@gmail.com>
+# License:     GNU, see LICENSE for more details
 
 
 import os
@@ -11,30 +11,33 @@ from telethon import TelegramClient, events
 from IncP.Common import LoadFileJson, DynImport
 
 
-class TListen():
+class TClient():
     def __init__(self, aConfApp: dict, aConfTask: dict):
         self.ConfTask = aConfTask
         self.ConfApp = aConfApp
 
-    async def _OnPlugin(self, aClient, aConf, aTClass) -> bool:
+    async def _OnPlugin(self, aConf: dict, aClient: TelegramClient, aTClass: object) -> bool:
         raise EnvironmentError()
 
     async def _OnSession(self, aClient):
         return aClient
 
-    @staticmethod
-    def _EventMethod(aConf: dict, aClass) -> tuple:
-        # default 'event' is events.NewMessage()
-        ConfEvent = aConf.get('event', 'NewMessage')
-        EventType = getattr(events, ConfEvent, None)
-        assert(EventType), f'no event supported {ConfEvent}'
+    def _GetKeys(self, aConf: dict, aKeys: list[str]) -> object:
+        for xKey in aKeys:
+            if (xKey not in aConf):
+                aConf[xKey] = self.ConfTask[xKey]
 
-        # default class 'method' is OnEvent()
-        ConfMethod = aConf.get('method', 'OnEvent')
-        Method = getattr(aClass, ConfMethod, None)
-        assert(Method), f'no method supported {ConfMethod}'
+    def _GetMethod(self, aConf: dict, aClass) -> object:
+        ConfMethod = aConf['method']
+        Res = getattr(aClass, ConfMethod, None)
+        assert(Res), f'no method `{ConfMethod}` in class `{aClass.__class__.__name__}`'
+        return Res
 
-        return (EventType, Method)
+    def _GetEvent(self, aConf: dict) -> events:
+        ConfEvent = aConf['event']
+        Res = getattr(events, ConfEvent, None)
+        assert(Res), f'no event `{ConfEvent}` supported'
+        return Res
 
     async def _Session(self, aName: str, aParams: dict):
         logging.info('session: %s %s', aName, self.ConfTask.get('comment', ''))
@@ -43,15 +46,17 @@ class TListen():
         await Client.connect()
         await self._OnSession(Client)
 
-        # dynamic plugin class loader from IncP.Plugin
+        # dynamic plugin class loader
         PluginCount = 0
         for xConf in self.ConfTask.get('plugins', []):
             if (xConf.get('enabled', True)):
+                self._GetKeys(xConf, ['class'])
                 ConfClass = xConf['class']
-                TClass, Err = DynImport(f'IncP.Plugin.{ConfClass}', 'TPlugin' + ConfClass)
+
+                TClass, Err = DynImport(f'Plugin.{self.ConfApp["class"]}.{ConfClass}', 'TP' + ConfClass)
                 assert(TClass), f'plugin loading error {Err}'
                 try:
-                    await self._OnPlugin(Client, xConf, TClass)
+                    await self._OnPlugin(xConf, Client, TClass)
                     PluginCount += 1
                 except Exception as E:
                     logging.error('add plugin: %s', E)

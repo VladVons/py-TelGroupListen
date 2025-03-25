@@ -9,7 +9,8 @@
             "console": "integratedTerminal",
             "purpose":["debug-in-terminal"],
             "justMyCode": true,
-            "args": ["--task=grp_uniq.json"]
+            "args": ["--task=phone_check.json"],
+            "_args": ["--phone-numbers=+1234567890", "--api-id=27489309", " --api-hash=aa5afcef4665d19b80710ef1d9ce9b46", "--api-phone-number=+380993874121"]
          }
     ]
 }

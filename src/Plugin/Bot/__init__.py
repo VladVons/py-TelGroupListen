@@ -4,10 +4,11 @@
 
 
 import logging
-from .Listen import TListen
+from telethon import TelegramClient
+from IncP.Client import TClient
 
 
-class TListenBot(TListen):
+class TBot(TClient):
     def __init__(self, aConfApp: dict, aConfTask: dict):
         super().__init__(aConfApp, aConfTask)
         self.Classes = {}
@@ -19,7 +20,7 @@ class TListenBot(TListen):
         Me = await aClient.get_me()
         logging.info('name: %s', Me.first_name)
 
-    async def _OnPlugin(self, aClient, aConf: dict, aTClass: object) -> bool:
+    async def _OnPlugin(self, aConf: dict, aClient: TelegramClient, aTClass: object) -> bool:
         # check class unique
         ConfClass = aConf['class']
         Class = self.Classes.get(ConfClass)
@@ -28,7 +29,8 @@ class TListenBot(TListen):
             self.Classes[ConfClass] = Class
 
         # add event handlers callback
-        EventType, Method = self._EventMethod(aConf, Class)
-        aClient.add_event_handler(Method, EventType())
+        Method = self._GetMethod(aConf, Class)
+        Event = self._GetEvent(aConf)
+        aClient.add_event_handler(Method, Event())
 
         logging.info('joined bot method %s.%s()', Class.__class__.__name__, Method.__name__)

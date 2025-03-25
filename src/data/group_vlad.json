@@ -2,23 +2,23 @@
   "app": {
     "dir_triggers": "data/triggers",
     "dir_sessions": "data/sessions",
-    "class": "ListenGroup"
+    "class": "Group"
   },
   "tasks": [
     {
       "enabled": true,
       "session": "myName",
+      "class": "MessageFilter",
+      "method": "OnNewMessage",
+      "event": "NewMessage",
+      "trigger": "test.txt",
       "phone": "+380993874121",
       "plugins": [
         {
-          "class": "GroupMessageFilter",
-          "group": "FindWares_UA",
-          "trigger": "test.txt"
+          "group": "FindWares_UA"
         },
         {
-          "class": "GroupMessageFilter",
-          "group": "FindWares_UA2",
-          "trigger": "test.txt"
+          "group": "FindWares_UA2"
         }
       ]
     }

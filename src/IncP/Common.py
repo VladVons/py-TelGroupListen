@@ -9,8 +9,8 @@ import json
 import sqlite3
 #
 
-__version__ = '1.0.6'
-__date__ =  '2025.03.23'
+__version__ = '1.0.8'
+__date__ =  '2025.03.25'
 
 gDbConn = None
 
@@ -46,6 +46,15 @@ def LoadFileJson(aFile: str) -> dict:
 def LoadFileTxt(aFile: str) -> list[str]:
     with open(aFile, 'r', encoding='utf8') as F:
         return F.readlines()
+
+def LoadFileConf(aFile: str) -> list[str]:
+    Lines = LoadFileTxt(aFile)
+    Res = (
+        xLine.strip()
+        for xLine in Lines
+        if xLine.strip() and (not xLine.startswith('#'))
+    )
+    return Res
 
 def DynImport(aPath: str, aClass: str) -> tuple:
     TClass, Err = (None, None)

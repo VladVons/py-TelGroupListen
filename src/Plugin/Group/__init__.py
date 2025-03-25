@@ -4,13 +4,14 @@
 
 
 import logging
+from telethon import TelegramClient
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 #
-from .Listen import TListen
+from IncP.Client import TClient
 
 
-class TListenGroup(TListen):
+class TGroup(TClient):
     @staticmethod
     def ConfCheck(aConf: dict) -> dict:
         # convert compact conf format v2 into v1
@@ -20,10 +21,10 @@ class TListenGroup(TListen):
                 Plugins = []
                 for xGroup in xTask['groups']:
                     Plugins.append({
-                        'class': xTask['class'],
-                        'event': xTask.get('event', 'NewMessage'),
-                        'method': xTask.get('method', 'OnNewMessage'),
                         'group': xGroup,
+                        'class': xTask['class'],
+                        'event': xTask['event'],
+                        'method': xTask['method'],
                         'trigger': xTask['trigger']
                     })
                 Tasks.append({
@@ -52,7 +53,7 @@ class TListenGroup(TListen):
         Me = await aClient.get_me()
         logging.info('name: %s %s, phone: %s', Me.first_name, Me.last_name, Me.phone)
 
-    async def _OnPlugin(self, aClient, aConf: dict, aTClass: object) -> bool:
+    async def _OnPlugin(self, aConf: dict, aClient: TelegramClient, aTClass: object) -> bool:
         ConfGroup = aConf['group']
         if ('/joinchat/' in ConfGroup):
             Hash = ConfGroup.rsplit('/', maxsplit=1)[-1]
@@ -61,10 +62,12 @@ class TListenGroup(TListen):
             Join = await aClient(JoinChannelRequest(ConfGroup))
 
         # each group has own class handler
-        CurChat = Join.chats[-1]
+        #CurChat = Join.chats[-1]
+        self._GetKeys(aConf, ['method', 'event', 'trigger'])
         aConf['trigger'] = f'{self.ConfApp["dir_triggers"]}/{aConf["trigger"]}'
-        Class = aTClass(CurChat, aConf)
-        EventType, Method = self._EventMethod(aConf, Class)
-        aClient.add_event_handler(Method, EventType(chats=ConfGroup))
+        Class = aTClass(aConf, aClient)
+        Method = self._GetMethod(aConf, Class)
+        Event = self._GetEvent(aConf)
+        aClient.add_event_handler(Method, Event(chats=ConfGroup))
 
         logging.info('joined group %s %s.%s()', ConfGroup, Class.__class__.__name__, Method.__name__)

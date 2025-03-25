@@ -1,22 +1,21 @@
 {
   "app": {
     "dir_sessions": "data/sessions",
-    "class": "ListenBot"
+    "class": "Bot"
   },
   "tasks": [
     {
       "enabled": true,
-      "comment": "FindWares bot",
+      "comment": "findWares_test",
       "session": "myBot",
+      "class": "Respond",
       "bot_token": "8179886965:AAHe_4_jOxWbvfLLifMv-gmK8AYKpDRv-pI",
       "plugins": [
         {
-          "class": "BotFindwares",
           "event": "NewMessage",
           "method": "OnNewMessage"
         },
         {
-          "class": "BotFindwares",
           "event": "CallbackQuery",
           "method": "OnCallbackQuery"
         }

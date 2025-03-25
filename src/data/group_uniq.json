@@ -3,14 +3,16 @@
   "app": {
     "dir_sessions": "data/sessions",
     "dir_triggers": "data/triggers",
-    "class": "ListenGroup"
+    "class": "Group"
   },
   "tasks": [
     {
       "enabled": true,
       "session": "14158156130",
-      "class": " GroupMessageFilter",
-      "trigger": "test.txt",
+      "class": "MessageUniq",
+      "method": "OnNewMessage",
+      "event": "NewMessage",
+      "trigger": "brutal.txt",
       "groups": [
         "udalenka_chatik",
         "workinchicago",

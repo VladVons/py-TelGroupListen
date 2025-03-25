@@ -1,0 +1,101 @@
+{
+  "ver": 1,
+  "app": {
+    "dir_triggers": "data/triggers",
+    "dir_sessions": "data/sessions",
+    "class": "Group"
+  },
+  "tasks": [
+    {
+      "enabled": true,
+      "session": "14158156130",
+      "class": "MessageFilter",
+      "method": "OnNewMessage",
+      "event": "NewMessage",
+      "trigger": "test.txt",
+      "plugins": [
+        {
+          "enabled": true,
+          "group": "udalenka_chatik",
+          "class": "MessageFilter",
+          "method": "OnNewMessage",
+          "event": "NewMessage",
+          "group": "udalenka_chatik",
+          "trigger": "test.txt"
+        },
+        {
+          "group": "workinchicago"
+        },
+        {
+          "group": "vacancies_infobiz"
+        },
+        {
+          "group": "gilbertwil"
+        },
+        {
+          "group": "ukraina_eskort"
+        },
+        {
+          "group": "savannamlbb"
+        },
+        {
+          "group": "hashira_mlbb"
+        },
+        {
+          "group": "mt103202transfer"
+        },
+        {
+          "group": "lowzemgwlls"
+        },
+        {
+          "group": "Nash_miami"
+        },
+        {
+          "group": "rostov_rabotaet"
+        },
+        {
+          "group": "gryzovik"
+        },
+        {
+          "group": "freelaceworkchat"
+        },
+        {
+          "group": "detiorlando"
+        },
+        {
+          "group": "miami2020russian"
+        },
+        {
+          "group": "footbolteame"
+        },
+        {
+          "group": "tempesstgacor"
+        },
+        {
+          "group": "new_york_ru"
+        },
+        {
+          "group": "grandmobail_chat"
+        },
+        {
+          "group": "concentrat_voronezh"
+        },
+        {
+          "group": "chatskzry"
+        },
+        {
+          "group": "work_in_miami_florida"
+        },
+        {
+          "group": "unityservices"
+        },
+        {
+          "group": "perevozshik7777"
+        },
+        {
+          "group": "concentratcertain9"
+        }
+      ]
+    }
+  ]
+}

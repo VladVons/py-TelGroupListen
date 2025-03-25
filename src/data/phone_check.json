@@ -1,0 +1,24 @@
+{
+  "app": {
+    "dir_sessions": "data/sessions",
+    "class": "Phone"
+  },
+  "tasks": [
+    {
+      "enabled": true,
+      "comment": "check if phones are in telegram",
+      "session": "myName",
+      "phone": "+380993874121",
+      "plugins": [
+        {
+          "class": "Check",
+          "method": "Exec",
+          "phones": [
+            "+380976646510",
+            "+380974874829"
+          ]
+        }
+      ]
+    }
+  ]
+}
